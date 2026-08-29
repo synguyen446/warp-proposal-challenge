@@ -17,4 +17,9 @@ Rules:
 * Normalize skids as pallets and convert metric weights to pounds.
 * Preserve previously confirmed facts unless the customer changes them.
 * Return JSON only, without Markdown, code fences, or additional explanation.
+
+SERVICEABILITY
+A lane is not priceable if any of these hold
+The freight needs flatbed, open-deck, or is oversize. Unserviceability reason: equipment_not_offered
+The freight is hazmat, any class or quantity.	Unserviceability reason: commodity_not_accepted
 """
