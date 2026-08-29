@@ -1,5 +1,6 @@
-from solution.extract.model_schema import Proposal
-from solution.extract.utils import LLM, Dialogue
+from solution.AI.model_schema import Proposal
+from solution.AI.model import LLM
+from solution.extract.utils import Dialogue
 from solution.prompt import SYSTEM_PROMPT_EXTRACT
 from pathlib import Path
 import pickle as pkl
@@ -20,6 +21,13 @@ def extract_data(audio_file: str) -> str:
             user_prompt=f"REP: {turn.rep}, CUSTOMER: {turn.customer}",
             pydantic_format=Proposal,
         )
+        output_path = Path(f"out/intermidate/{audio_file}.json")
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(
+                proposal.model_dump_json(indent=2),
+                encoding="utf-8",
+            )
+        input()
 
     print("Complete Processed Proposal.")
 

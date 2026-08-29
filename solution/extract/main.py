@@ -1,6 +1,6 @@
 from typing import List
 from dataclasses import dataclass
-from solution.extract.model_schema import Proposal
+from solution.AI.model_schema import Proposal
 from solution.extract.utils import LLM
 from solution.extract.prompt import SYSTEM_PROMPT
 from pathlib import Path

@@ -2,9 +2,9 @@ import json
 import pickle as pkl
 from solution.data.data import *
 from solution.data.utils import *
-from solution.data.prompt import SYSTEM_PROMPT
+from solution.AI.prompt import SYSTEM_PROMPT
 from solution.extract.utils import LLM
-from solution.extract.model_schema import Rationale, Proposal_addon
+from solution.AI.model_schema import Rationale, Proposal_addon
 
 
 def main():

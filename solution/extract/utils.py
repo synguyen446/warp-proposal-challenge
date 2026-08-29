@@ -1,31 +1,6 @@
-from ollama import chat
 from typing import List
 import re
 from dataclasses import dataclass
-
-
-class LLM:
-    def __init__(self, system_prompt):
-        self.context = [{"role": "system", "content": system_prompt}]
-
-    def get_response(self, user_prompt: str, pydantic_format=None):
-        self.context.append({"role": "user", "content": user_prompt})
-        response = chat(
-            model="qwen2.5:7b ",
-            messages=self.context,
-            format=pydantic_format.model_json_schema() if pydantic_format else None,
-        )
-        formatted_response = (
-            pydantic_format.model_validate_json(response.message.content)
-            if pydantic_format
-            else response.message.content
-        )
-        self.context.append({"role": "assistant", "content": response.message.content})
-
-        return formatted_response
-
-    def get_history(self):
-        return self.context
 
 
 @dataclass

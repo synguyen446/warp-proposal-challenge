@@ -1,15 +1,12 @@
 import json
-import pickle as pkl
+
 from solution.data.data import *
 from solution.data.utils import *
-from solution.prompt import SYSTEM_PROMPT_DATA
-from solution.extract.utils import LLM
-from solution.extract.model_schema import Rationale, Proposal_addon
+
 
 
 def compute_data(proposal_file: str):
 
-    model = LLM(system_prompt=SYSTEM_PROMPT_DATA)
 
     with open(
         proposal_file,
@@ -54,26 +51,15 @@ def compute_data(proposal_file: str):
         monthly_total_all_lanes += lane["pricing"]["monthly_total"]
         monthly_total_shipment += lane["shipments_per_month"]
 
-        response = model.get_response(
-            user_prompt=f"{str(lane)} rationale per lane - one sentence on why this mode and service level.",
-            pydantic_format=Rationale,
-        )
-        lane["rationale"] = response.model_dump()["rationale"]
 
     # STEP 6
     get_volume_tier(proposal, VOLUME_TIERS_DF, monthly_total_shipment)
     proposal["monthly_total"] = monthly_total_all_lanes
     proposal["annual_total"] = monthly_total_all_lanes * 12
 
-    with open("./model_history.pkl", "rb") as file:
-        model_history = pkl.load(file)
+    output = f"{proposal_file}_computed.json"
 
-    response = model.get_response(
-        user_prompt=f"Data: {str(lane)}, Dialogue: {str(model_history)}",
-        pydantic_format=Proposal_addon,
-    )
-    for category in response.model_dump().keys():
-        proposal[category] = response.model_dump()[category]
-
-    with open(f"{proposal_file}_computed.json", "w") as f:
+    with open(output, "w") as f:
         json.dump(proposal, f, indent=2)
+
+    return output
