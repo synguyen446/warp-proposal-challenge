@@ -126,9 +126,13 @@ def get_transit_days(lane, rate_card, service_levels):
 
 def get_volume_tier(proposal, volume_tiers, monthly_total_shipment):
     tier = volume_tiers.loc[
-        (volume_tiers["min_monthly_shipments"] < monthly_total_shipment)
-        & (volume_tiers["max_monthly_shipments"] > monthly_total_shipment)
+        (volume_tiers["min_monthly_shipments"] <= monthly_total_shipment)
+        & (volume_tiers["max_monthly_shipments"] >= monthly_total_shipment)
     ]
+
+    if tier.empty:                                                              #Proposal exceed 250 shipments
+        tier = volume_tiers.loc[volume_tiers["tier_name"]=='Enterprise']
+
     proposal["volume_tier"] = {
         "tier_name": tier["tier_name"].item(),
         "total_monthly_shipments": monthly_total_shipment,
