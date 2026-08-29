@@ -1,5 +1,5 @@
 from solution.extract.utils import LLM
-from solution.extract.model_schema import Proposal
+from solution.model_schema import Proposal
 from solution.prompt import SYSTEM_PROMPT_COMPARE_PIPELINE
 
 

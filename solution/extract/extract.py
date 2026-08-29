@@ -5,7 +5,7 @@ from pathlib import Path
 import pickle as pkl
 
 
-def extract_data(audio_file):
+def extract_data(audio_file: str) -> str:
     d_object = Dialogue(audio_file)
     turns = d_object.construct_turns()
     meta_data = d_object.get_meta_data()

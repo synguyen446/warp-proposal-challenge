@@ -8,7 +8,7 @@ class LLM:
     def __init__(self, system_prompt):
         self.context = [{"role": "system", "content": system_prompt}]
 
-    def get_response(self, user_prompt, pydantic_format=None):
+    def get_response(self, user_prompt: str, pydantic_format=None):
         self.context.append({"role": "user", "content": user_prompt})
         response = chat(
             model="qwen2.5:7b ",
@@ -70,7 +70,7 @@ class Dialogue:
 
         return bundles
 
-    def get_meta_data(self):
+    def get_meta_data(self) -> str:
         meta_data = {}
         for md in self.metadata:
             if md.strip():

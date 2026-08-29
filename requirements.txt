@@ -1,2 +1,8 @@
 # validate.py uses only the Python standard library.
 # Your own pipeline may need more. Add what you use.
+ollama==0.6.2
+pandas==3.0.5
+torchaudio==2.11.0
+torchvision==0.28.0
+torch==2.13.0
+--extra-index-url https://download.pytorch.org/whl/cu128

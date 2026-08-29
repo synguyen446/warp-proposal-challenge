@@ -7,7 +7,7 @@ from solution.extract.utils import LLM
 from solution.extract.model_schema import Rationale, Proposal_addon
 
 
-def compute_data(proposal_file):
+def compute_data(proposal_file: str):
 
     model = LLM(system_prompt=SYSTEM_PROMPT_DATA)
 
@@ -20,13 +20,14 @@ def compute_data(proposal_file):
 
     monthly_total_all_lanes = 0
     monthly_total_shipment = 0
+
     for lane in lanes:
         # STEP 0
         is_serviceable = check_and_get_servicability(
             lane, RATE_CARD_DF, PRICE_CONFIG_DICT
         )
 
-        if not is_serviceable:  # skip lane entirely if cannot service
+        if not is_serviceable:  # skip lane data computation if cannot service without dropping the lane entirely
             continue
 
         # STEP 1
