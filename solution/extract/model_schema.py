@@ -41,7 +41,27 @@ class Proposal(BaseModel):
     call_id: str | None
     customer: Customer
     lanes: List[Lane]
-    total_monthly_shipments: int
-    blockers: List[str]
+    total_monthly_shipments: int | None = Field(
+        description="The sum of all lanes monthly shipment"
+    )
 
 
+class Rationale(BaseModel):
+    rationale: str = Field(
+        description="one sentence on why this mode and service level."
+    )
+
+
+class Proposal_addon(BaseModel):
+    deal_summary: str = Field(
+        description="""two or three sentences a rep can say out loud describing the customer's freight in the customer's own terms."""
+    )
+    assumptions: List[str] = Field(
+        description="anything you inferred rather than heard. If the customer never said whether the origin had a dock and you assumed one, say so."
+    )
+    open_questions: List[str] = Field(
+        description="what the rep should ask before this becomes a contract."
+    )
+    excluded: str | None = Field(
+        description="Leave null if all lanes are serviceable. Otherwise, every lane or requirement you could not price, with the reason in plain language the customer would accept."
+    )
