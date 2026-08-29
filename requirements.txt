@@ -1,0 +1,2 @@
+# validate.py uses only the Python standard library.
+# Your own pipeline may need more. Add what you use.
