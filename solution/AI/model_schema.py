@@ -30,8 +30,7 @@ class Lane(BaseModel):
         "equipment_not_offered",
         "commodity_not_accepted",
         "exceeds_capacity",
-        None,
-    ] = Field(description="if is serviceble, set the value to null")
+    ]|None = Field(description="if is serviceble, set the value to null")
     notes: str = Field(
         description="Record special requests, operational circumstances, corrections, requested alternatives, and important delivery details in notes."
     )

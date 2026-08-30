@@ -21,7 +21,7 @@ def extract_data(audio_file: str) -> str:
             user_prompt=f"REP: {turn.rep}, CUSTOMER: {turn.customer}",
             pydantic_format=Proposal,
         )
-        output_path = Path(f"out/intermidate/{audio_file}_{i+1}.json")
+        output_path = Path(fr"out/intermidate/{audio_file}_{i+1}.json").resolve()
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(
             proposal.model_dump_json(indent=2),
@@ -35,7 +35,7 @@ def extract_data(audio_file: str) -> str:
     with open("model_history.pkl", "wb") as file:
         pkl.dump(model_history, file)
 
-    output_path = Path(f"out/{audio_file}.json")
+    output_path = Path(f"out/{audio_file}.json").resolve()
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     output_path.write_text(

@@ -3,6 +3,7 @@
 --extra-index-url https://download.pytorch.org/whl/cu128
 
 ollama==0.6.2
+google.genai==2.20.0
 pydantic>=2.10,<3
 pandas==3.0.5
 torch==2.11.0
