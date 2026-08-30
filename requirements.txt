@@ -1,2 +1,4 @@
-# validate.py uses only the Python standard library.
-# Your own pipeline may need more. Add what you use.
+pydantic>=2.10,<3
+pandas==3.0.5
+
+
