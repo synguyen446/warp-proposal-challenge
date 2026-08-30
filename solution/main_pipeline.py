@@ -23,12 +23,13 @@ def main():
     logging.info("Extracting audio file with LLM...")
 
     if args.no_ai:
-        proposal_file = run_pipeline_no_ai()
+        proposal_file = run_pipeline_no_ai(args.audio)
     else:
         proposal_file = extract_data(args.audio)
 
     logging.info("Computing with internal data... ")
     computer_proposal_file = compute_data(proposal_file)
+    
     if not args.no_ai:
         logging.info("Intepreting with AI...")
         llm_evaluate(computer_proposal_file)

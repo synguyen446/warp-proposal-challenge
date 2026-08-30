@@ -1,15 +1,27 @@
-
 from __future__ import annotations
-import argparse
 import re
 from pathlib import Path
 from solution.AI.model_schema import Proposal, Lane, Customer
 
 NUMBER_WORDS = {
-    "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
-    "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
-    "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50,
-    "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90,
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10,
+    "twenty": 20,
+    "thirty": 30,
+    "forty": 40,
+    "fifty": 50,
+    "sixty": 60,
+    "seventy": 70,
+    "eighty": 80,
+    "ninety": 90,
 }
 NUMBER = (
     r"(?:one|two|three|four|five|six|seven|eight|nine)\s+hundred|"
@@ -78,11 +90,23 @@ def extract(transcript_path: Path) -> Proposal:
         match = re.search(rf"\b{re.escape(name)}\b", lower)
         if match:
             location_matches.append((match.start(), location))
-    mentioned_locations = [
-        location for _, location in sorted(location_matches)
-    ]
+    mentioned_locations = [location for _, location in sorted(location_matches)]
 
-    lane = Lane()
+    lane = Lane(
+        origin_metro="",
+        origin_state="",
+        dest_metro="",
+        dest_state="",
+        pallets_per_shipment=None,
+        weight_lb_per_pallet=None,
+        shipments_per_month=None,
+        service_level="STANDARD",
+        mode_quoted=None,
+        accessorials=[],
+        serviceable=True,
+        unserviceable_reason=None,
+        notes="",
+    )
     if len(mentioned_locations) >= 2:
         origin, destination = mentioned_locations[:2]
         lane.origin_metro, lane.origin_state = origin
@@ -137,22 +161,22 @@ def extract(transcript_path: Path) -> Proposal:
     lanes = [lane] if lane.origin_metro and lane.dest_metro else []
     total = sum(item.shipments_per_month or 0 for item in lanes)
 
-    return Proposal(
-        call_id=metadata_value(text, "CALL") or transcript_path.stem,
+    proposal = Proposal(
+        call_id=(metadata_value(text, "CALL") or transcript_path.stem),
         customer=Customer(
             company=metadata_value(text, "CUSTOMER"),
-            contact=contact_match.group(1).title() if contact_match else None,
+            contact=(contact_match.group(1).title() if contact_match else None),
             industry=industry,
         ),
         lanes=lanes,
         total_monthly_shipments=total,
     )
 
+    return proposal
+
 
 def run_pipeline_no_ai(audio_file: str) -> str:
-
-    facts = extract(audio_file)
-    proposal = facts.model_dump_json(indent=2)
+    proposal = extract(Path(audio_file))
 
     output_path = Path(f"out/{audio_file}.json")
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -163,4 +187,3 @@ def run_pipeline_no_ai(audio_file: str) -> str:
     )
 
     return output_path
-

@@ -21,13 +21,12 @@ def extract_data(audio_file: str) -> str:
             user_prompt=f"REP: {turn.rep}, CUSTOMER: {turn.customer}",
             pydantic_format=Proposal,
         )
-        output_path = Path(f"out/intermidate/{audio_file}.json")
+        output_path = Path(f"out/intermidate/{audio_file}_{i+1}.json")
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(
-                proposal.model_dump_json(indent=2),
-                encoding="utf-8",
-            )
-        input()
+            proposal.model_dump_json(indent=2),
+            encoding="utf-8",
+        )
 
     print("Complete Processed Proposal.")
 

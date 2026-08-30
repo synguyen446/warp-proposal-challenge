@@ -9,10 +9,10 @@ class Customer(BaseModel):
 
 
 class Lane(BaseModel):
-    origin_metro: str = Field(description="Origin City")
-    origin_state: str = Field(description="Two-letter state code")
-    dest_metro: str = Field(description="Destination City")
-    dest_state: str = Field(description="Two-letter state code")
+    origin_metro: str
+    origin_state: str = Field(description="Two-letter")
+    dest_metro: str
+    dest_state: str = Field(description="Two-letter")
     pallets_per_shipment: int | None
     weight_lb_per_pallet: int | None
     shipments_per_month: int | None

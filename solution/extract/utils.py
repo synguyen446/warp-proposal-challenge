@@ -19,6 +19,7 @@ class Dialogue:
     def construct_turns(self) -> List[TurnBundle]:
         bundles: List[TurnBundle] = []
         rep_buffer: List[str] = []
+        customer_buffer: List[str] = []
 
         for raw in self.dialogue:
             line = raw.strip()
@@ -32,16 +33,29 @@ class Dialogue:
             speaker, text = m.group(1), m.group(2).strip()
 
             if speaker == "REP":
-                rep_buffer.append(text)
-            else:
                 if rep_buffer:
                     bundles.append(
                         TurnBundle(
                             rep=" ".join(rep_buffer),
-                            customer=text,
+                            customer=(
+                                " ".join(customer_buffer) if customer_buffer else ""
+                            ),
                         )
                     )
-                    rep_buffer = []
+                    customer_buffer = []
+
+                rep_buffer.append(text)
+
+            elif speaker == "CUSTOMER":
+                customer_buffer.append(text)
+
+        if rep_buffer:
+            bundles.append(
+                TurnBundle(
+                    rep=" ".join(rep_buffer),
+                    customer=" ".join(customer_buffer) if customer_buffer else "",
+                )
+            )
 
         return bundles
 

@@ -1,7 +1,4 @@
-"""Tiny standard-library web UI for a live Warp proposal.
 
-Usage: python proposal_ui.py out/
-"""
 
 from __future__ import annotations
 
