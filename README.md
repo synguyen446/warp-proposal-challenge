@@ -19,7 +19,7 @@ python -m solution.main_pipeline --no-ai
 ```
 #### 2. Run with AI (Can only run when you install dependencies from requirements_cuda.txt)
 ```bash
-python -m solution.main_pipeline
+python -m solution.main_pipeline -audio=path\to\.txt\audio\file
 ```
 ## Python UI
 You can also run python UI with the following command
@@ -48,4 +48,22 @@ I read data directly from data/*.csv
 <img width="1090" height="241" alt="image" src="https://github.com/user-attachments/assets/a41f8996-fb52-43cf-bec0-39bd21e461dd" />
 
 ### 4. A "Decisions and tradeoffs" section: what you chose, what you cut, where your tool fails, and what you would do next with more time
+What I chose:
+ - Use Pydantic to ensure consistent input/output with LLM
+ - Implement UI for that even a non-technical rep can read and present from
+ - The pipeline is broken down in 3 steps; each step can be run and tested separately -> easy debugging
 
+What I cut 
+- I prioritized accurate pricing and safe exclusions over broad features.
+- The rules fallback intentionally handles only common, high-confidence freight patterns.
+
+Where your tool fails
+- Occasionally, the origin/destination city will include state code -> lead to fail route look up -> causing unserviceable
+- Pydantic is a great guide/rail-guard but it does not guaranteed is factually correct
+- Since we are prioritizing efficiency, model choice are limited -> sometime miss customer request 
+
+Futurework
+- More comprehensive dashboard with live update when new information flow in
+- Better AI summarization that tailored to given data
+- Audio transcription with whipser-openai for better real call simulation
+- Use multi-threading to skip wait time on model calling
