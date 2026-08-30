@@ -38,13 +38,14 @@ The Representation will have the option to view the dashboard of any proposal.js
 
 
 ## Assessments
-### Which model provider you used and why
+### 1. Which model provider you used and why
 I chose ollama because it has lots of options to choose from. If I want efficiency and quick, I can choose llama3.2 (1B). If I want more accuracy, I can choose qwen2.5:7b. Also, the model is local so there is no limitation in term of cost and tokens.
 
-### Whether you read data/ directly or went through mock/server.py
+### 2. Whether you read data/ directly or went through mock/server.py
 I read data directly from data/*.csv
 
-### your validate.py output, reported honestly
+### 3. Your validate.py output, reported honestly
+<img width="1090" height="241" alt="image" src="https://github.com/user-attachments/assets/a41f8996-fb52-43cf-bec0-39bd21e461dd" />
 
-### a "Decisions and tradeoffs" section: what you chose, what you cut, where your tool fails, and what you would do next with more time
+### 4. A "Decisions and tradeoffs" section: what you chose, what you cut, where your tool fails, and what you would do next with more time
 
